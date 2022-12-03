@@ -1,46 +1,56 @@
+import { identity } from "lodash/fp";
 import { describe, it } from "vitest";
-import { readlines } from "./file";
+import { readlines, TestType } from "./file";
 
-export type PartFn<T> = (values: string[]) => T | Promise<T>;
-export type DayProps<P1, P2> = {
-  part1Fn: PartFn<P1>;
-  part1Expected: P1;
-  part2Fn?: PartFn<P2>;
-  part2Expected?: P2;
-};
+export type ResultFn<Input, Result> = (input: Input) => Result | Promise<Result>;
+export interface DayProps<Result1, Result2, Input = string[]> {
+  first: {
+    solution: ResultFn<Input, Result1>;
+    expected: Result1;
+  };
+  second?: {
+    solution: ResultFn<Input, Result2>;
+    expected: Result2;
+  };
+  preprocess?: Preprocess<Input>;
+}
+export type Preprocess<Output> = (values: string[]) => Output | Promise<Output>;
+
 export const day =
-  <P1, P2>({ part1Fn, part1Expected, part2Fn, part2Expected }: DayProps<P1, P2>) =>
+  <R1, R2, Input>({ first, second, preprocess = identity }: DayProps<R1, R2, Input>) =>
   (day: number) => {
+    const read = async (type: TestType) => {
+      const lines = await readlines(day, type);
+
+      return preprocess(lines);
+    };
+
     describe.concurrent(`Advent of Code: Day ${day}`, () => {
       describe("Part 1", async () => {
-        it(`Should return ${part1Expected} for test input`, async () => {
-          const lines = await readlines(day, "test");
-          lines.pop();
+        it(`Should return ${first.expected} for test input`, async () => {
+          const lines = await read("test");
 
-          expect(await part1Fn(lines)).toBe(part1Expected);
+          expect(await first.solution(lines)).toBe(first.expected);
         });
         it(`Try for real input`, async () => {
-          const lines = await readlines(day, "real");
-          lines.pop();
+          const lines = await read("real");
 
-          console.info(`Day ${day} - Part 1::Expected Answer:\n- ${await part1Fn(lines)}`);
+          console.info(`Day ${day} - Part 1::Expected Answer:\n- ${await first.solution(lines)}`);
         });
       });
 
-      if (!part2Fn) return;
+      if (!second) return;
       describe("Part 2", async () => {
-        it(`Should return ${part2Expected} for test input`, async () => {
-          const lines = await readlines(day, "test");
-          lines.pop();
+        it(`Should return ${second.expected} for test input`, async () => {
+          const lines = await read("test");
 
-          expect(await part2Fn(await readlines(day, "test"))).toBe(part2Expected);
+          expect(await second.solution(lines)).toBe(second.expected);
         });
 
         it(`Try for real input`, async () => {
-          const lines = await readlines(day, "real");
-          lines.pop();
+          const lines = await read("real");
 
-          console.info(`Day ${day} - Part 2::Expected Answer:\n- ${await part2Fn(lines)}`);
+          console.info(`Day ${day} - Part 2::Expected Answer:\n- ${await second.solution(lines)}`);
         });
       });
     });

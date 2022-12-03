@@ -2,13 +2,14 @@ lockfileVersion: 5.4
 
 specifiers:
   '@faker-js/faker': ^7.5.0
+  '@types/lodash': ^4.14.191
   '@types/node': ^18.8.3
   '@typescript-eslint/eslint-plugin': ^5.39.0
   '@typescript-eslint/parser': ^5.39.0
   eslint: 8.25.0
   eslint-plugin-unused-imports: ^2.0.0
+  lodash: ^4.17.21
   prettier: ^2.7.1
-  rambda: ^7.3.0
   rollup: ^3.5.1
   typescript: ^4.9.3
   vite: ^3.1.7
@@ -16,10 +17,11 @@ specifiers:
   vitest: ^0.24.0
 
 dependencies:
-  rambda: 7.4.0
+  lodash: 4.17.21
 
 devDependencies:
   '@faker-js/faker': 7.6.0
+  '@types/lodash': 4.14.191
   '@types/node': 18.11.10
   '@typescript-eslint/eslint-plugin': 5.45.0_rf36wnrvwtk4bnwpnpmvnimv5u
   '@typescript-eslint/parser': 5.45.0_5ldjemcacbssrrv7slgrertrym
@@ -127,6 +129,10 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/node/18.11.10:
@@ -1021,6 +1027,10 @@ packages:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
 
+  /lodash/4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
+
   /loupe/2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
     dependencies:
@@ -1175,10 +1185,6 @@ packages:
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
-
-  /rambda/7.4.0:
-    resolution: {integrity: sha512-A9hihu7dUTLOUCM+I8E61V4kRXnN4DwYeK0DwCBydC1MqNI1PidyAtbtpsJlBBzK4icSctEcCQ1bGcLpBuETUQ==}
-    dev: false
 
   /regexpp/3.2.0:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}

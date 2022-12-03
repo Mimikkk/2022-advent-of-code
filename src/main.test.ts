@@ -1,4 +1,4 @@
-import { sortBy, keys } from "rambda";
+import { sortBy, keys } from "lodash/fp";
 
 const days = import.meta.glob("./days/**/index.ts");
 type ModuleFn = () => Promise<{ default: (day: number) => void }>;
