@@ -1,6 +1,6 @@
 import { day } from "../../utils/day";
 
-day(1)({
+export default day({
   part1Fn: (lines) => {
     let max = 0;
     lines.reduce((sum, calorie) => sum + (calorie === "" ? ((max = Math.max(max, sum)), -sum) : +calorie), 0);

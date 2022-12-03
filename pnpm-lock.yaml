@@ -9,8 +9,10 @@ specifiers:
   eslint-plugin-unused-imports: ^2.0.0
   prettier: ^2.7.1
   rambda: ^7.3.0
+  rollup: ^3.5.1
   typescript: ^4.9.3
   vite: ^3.1.7
+  vite-plugin-dynamic-import: ^1.2.4
   vitest: ^0.24.0
 
 dependencies:
@@ -24,8 +26,10 @@ devDependencies:
   eslint: 8.25.0
   eslint-plugin-unused-imports: 2.0.0_4lc3yuhqs2vkj2j4kahyb6x2ty
   prettier: 2.8.0
+  rollup: 3.5.1
   typescript: 4.9.3
   vite: 3.2.4_@types+node@18.11.10
+  vite-plugin-dynamic-import: 1.2.4
   vitest: 0.24.5
 
 packages:
@@ -1215,6 +1219,14 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /rollup/3.5.1:
+    resolution: {integrity: sha512-hdQWTvPeiAbM6SUkxV70HdGUVxsgsc+CLy5fuh4KdgUBJ0SowXiix8gANgXoG3wEuLwfoJhCT2V+WwxfWq9Ikw==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
@@ -1347,6 +1359,12 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.1.1
+    dev: true
+
+  /vite-plugin-dynamic-import/1.2.4:
+    resolution: {integrity: sha512-R6spqDhDm8VxaUNyEkybh9PM262ReO8WXJ6rjtyJ/H8Y4b+pq2uM9Xz5DMu7N7OxUGlqo9HSzT3VjhpbySXrng==}
+    dependencies:
+      fast-glob: 3.2.12
     dev: true
 
   /vite/3.2.4_@types+node@18.11.10:
