@@ -1,9 +1,6 @@
 import { filter, identity, map, pipe, sum } from "lodash/fp";
 import { day, Preprocess } from "../../utils";
 
-// Charcode of "A-Z" is 65-90
-// Charcode of "a-z" is 97-122
-// make a function which returns the charcode of the next letter
 const code = (char: string) => char.charCodeAt(0);
 const charvalue = pipe(code, (code) => code - (code > 90 ? 96 : 38));
 
