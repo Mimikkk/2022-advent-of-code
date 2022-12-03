@@ -2,8 +2,8 @@ import { reduce, __, map, tap, take, subtract, pipe, sortBy, sum, add, first } f
 import { day, Preprocess } from "../../utils";
 
 export default day({
-  preprocess: map(Number) as Preprocess<number[]>,
   first: {
+    preprocess: map(Number) as Preprocess<number[]>,
     solution: pipe(
       reduce(([max, sum], calorie) => [calorie ? max : Math.max(max, sum), sum + (calorie || -sum)], [0, 0]),
       first
@@ -12,6 +12,7 @@ export default day({
   },
 
   second: {
+    preprocess: map(Number) as Preprocess<number[]>,
     solution: pipe(
       reduce(
         ([max, sum], calorie) => [calorie ? max : (max.push(sum), max), sum + (calorie || -sum)] as [number[], number],

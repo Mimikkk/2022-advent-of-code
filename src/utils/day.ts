@@ -1,56 +1,41 @@
-import { identity } from "lodash/fp";
+import { each, entries, identity } from "lodash";
 import { describe, it } from "vitest";
 import { readlines, TestType } from "./file";
 
 export type ResultFn<Input, Result> = (input: Input) => Result | Promise<Result>;
-export interface DayProps<Result1, Result2, Input = string[]> {
-  first: {
-    solution: ResultFn<Input, Result1>;
-    expected: Result1;
-  };
-  second?: {
-    solution: ResultFn<Input, Result2>;
-    expected: Result2;
-  };
+export interface Part<Input, Result> {
   preprocess?: Preprocess<Input>;
+  solution: ResultFn<Input, Result>;
+  expected: Result;
+}
+export interface DayProps<Result1, Result2, Input1 = string[], Input2 = string[]> {
+  first?: Part<Input1, Result1>;
+  second?: Part<Input2, Result2>;
 }
 export type Preprocess<Output> = (values: string[]) => Output | Promise<Output>;
 
 export const day =
-  <R1, R2, Input>({ first, second, preprocess = identity }: DayProps<R1, R2, Input>) =>
+  <R1, R2, I1, I2>(parts: DayProps<R1, R2, I1, I2>) =>
   (day: number) => {
-    const read = async (type: TestType) => {
-      const lines = await readlines(day, type);
-
-      return preprocess(lines);
-    };
-
     describe.concurrent(`Advent of Code: Day ${day}`, () => {
-      describe("Part 1", async () => {
-        it(`Should return ${first.expected} for test input`, async () => {
-          const lines = await read("test");
+      entries(parts).forEach(([name, { solution, expected, preprocess = identity }]) => {
+        const read = async (type: TestType) => {
+          const lines = await readlines(day, type);
 
-          expect(await first.solution(lines)).toBe(first.expected);
-        });
-        it(`Try for real input`, async () => {
-          const lines = await read("real");
+          return preprocess(lines);
+        };
 
-          console.info(`Day ${day} - Part 1::Expected Answer:\n- ${await first.solution(lines)}`);
-        });
-      });
+        describe(`Part ${name}`, async () => {
+          it(`Should return ${expected} for test input`, async () => {
+            const lines = await read("test");
 
-      if (!second) return;
-      describe("Part 2", async () => {
-        it(`Should return ${second.expected} for test input`, async () => {
-          const lines = await read("test");
+            expect(await solution(lines)).toBe(expected);
+          });
+          it(`Try for real input`, async () => {
+            const lines = await read("real");
 
-          expect(await second.solution(lines)).toBe(second.expected);
-        });
-
-        it(`Try for real input`, async () => {
-          const lines = await read("real");
-
-          console.info(`Day ${day} - Part 2::Expected Answer:\n- ${await second.solution(lines)}`);
+            console.info(`Day ${day} - Part 1::Expected Answer:\n- ${await solution(lines)}`);
+          });
         });
       });
     });

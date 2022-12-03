@@ -26,8 +26,8 @@ const Outcome: Record<string, number> = {
 
 const scorematch = ([a, b]: number[]) => (isWin(a, b) && b + 6) || (isDraw(a, b) && b + 3) || b;
 export default day({
-  preprocess: filter(identity) as Preprocess<string[]>,
   first: {
+    preprocess: filter(identity) as Preprocess<string[]>,
     solution: pipe(
       map((round) => round.split(" ").map((x) => Shape[x])),
       map(scorematch),
@@ -36,6 +36,7 @@ export default day({
     expected: 15,
   },
   second: {
+    preprocess: filter(identity) as Preprocess<string[]>,
     solution: pipe(
       map((round) => Outcome[round.replace(" ", "")]),
       sum
