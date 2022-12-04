@@ -2,15 +2,14 @@ import { each, entries, identity } from "lodash";
 import { describe, it } from "vitest";
 import { readlines, TestType } from "./file";
 
-export type ResultFn<Input, Result> = (input: Input) => Result | Promise<Result>;
-export type Preprocess<Output> = ResultFn<string[], Output>;
+export type Fn<Input, Result> = (input: Input) => Result | Promise<Result>;
 
 export interface Part<Input, Result> {
-  preprocess?: Preprocess<Input>;
-  solution: ResultFn<Input, Result>;
+  preprocess?: Fn<string[], Input>;
+  solution: Fn<Input, Result>;
   expected: Result;
 }
-export interface DayProps<Result1, Result2, Input1 = string[], Input2 = string[]> {
+export interface DayProps<Result1, Result2, Input1, Input2> {
   first?: Part<Input1, Result1>;
   second?: Part<Input2, Result2>;
 }
