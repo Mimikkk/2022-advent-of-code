@@ -29,11 +29,7 @@ const scorematch = ([a, b]: number[]) => (isWin(a, b) && b + 6) || (isDraw(a, b)
 export default day({
   first: {
     preprocess: filter(identity) as Preprocess<string[]>,
-    solution: pipe(
-      map((round) => round.split(" ").map((x) => Shape[x])),
-      map(scorematch),
-      sum
-    ),
+    solution: pipe(map(pipe((round) => round.split(" ").map((x) => Shape[x]), scorematch)), sum),
     expected: 15,
   },
   second: {

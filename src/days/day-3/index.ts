@@ -11,12 +11,12 @@ const splitInHalf = (str: string) => [str.slice(0, str.length / 2), str.slice(st
 export default day({
   first: {
     preprocess: pipe(filter(identity), map(splitInHalf)) as Preprocess<[string, string][]>,
-    solution: pipe(map(uniques), map(intersection), map(charvalue), sum),
+    solution: pipe(map(pipe(uniques, intersection, charvalue)), sum),
     expected: 157,
   },
   second: {
     preprocess: pipe(filter(identity), chunk(3)) as Preprocess<[string, string, string][]>,
-    solution: pipe(map(uniques), map(intersection), map(charvalue), sum),
+    solution: pipe(map(pipe(uniques, intersection, charvalue)), sum),
     expected: 70,
   },
 });
