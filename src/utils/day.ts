@@ -1,4 +1,4 @@
-import { each, entries, identity } from "lodash";
+import { identity } from "lodash";
 import { describe, it } from "vitest";
 import { readlines, TestType } from "./file";
 
@@ -19,14 +19,13 @@ export const day =
   <R1, R2, I1, I2>(parts: DayProps<R1, R2, I1, I2>) =>
   (day: number) => {
     describe.concurrent(`Advent of Code: Day ${day}`, () => {
-      entries(parts).forEach(([name, { solution, expected, preprocess = identity }]) => {
+      Object.values(parts).forEach(({ solution, expected, preprocess = identity }, part) => {
         const read = async (type: TestType) => {
           const lines = await readlines(day, type);
 
           return preprocess(lines);
         };
-
-        describe(`Part ${name}`, async () => {
+        describe(`Part ${part + 1}`, async () => {
           it(`Should return ${expected} for test input`, async () => {
             const lines = await read("test");
 
@@ -35,7 +34,9 @@ export const day =
           it(`Try for real input`, async () => {
             const lines = await read("real");
 
-            console.info(`Day ${day} - Part 1::Expected Answer:\n- ${await solution(lines)}`);
+            console.info(
+              `Day ${day} - Part ${part + 1}::Expected Answer:\n- ${await solution(lines)}`
+            );
           });
         });
       });
