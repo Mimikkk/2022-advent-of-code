@@ -3,6 +3,8 @@ import { describe, it } from "vitest";
 import { readlines, TestType } from "./file";
 
 export type ResultFn<Input, Result> = (input: Input) => Result | Promise<Result>;
+export type Preprocess<Output> = ResultFn<string[], Output>;
+
 export interface Part<Input, Result> {
   preprocess?: Preprocess<Input>;
   solution: ResultFn<Input, Result>;
@@ -12,7 +14,6 @@ export interface DayProps<Result1, Result2, Input1 = string[], Input2 = string[]
   first?: Part<Input1, Result1>;
   second?: Part<Input2, Result2>;
 }
-export type Preprocess<Output> = (values: string[]) => Output | Promise<Output>;
 
 export const day =
   <R1, R2, I1, I2>(parts: DayProps<R1, R2, I1, I2>) =>
