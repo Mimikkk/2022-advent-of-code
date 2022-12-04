@@ -5,7 +5,10 @@ export default day({
   first: {
     preprocess: map(Number) as Preprocess<number[]>,
     solution: pipe(
-      reduce(([max, sum], calorie) => [calorie ? max : Math.max(max, sum), sum + (calorie || -sum)], [0, 0]),
+      reduce(
+        ([max, sum], calorie) => [calorie ? max : Math.max(max, sum), sum + (calorie || -sum)],
+        [0, 0]
+      ),
       first
     ),
     expected: 24000,
@@ -15,7 +18,8 @@ export default day({
     preprocess: map(Number) as Preprocess<number[]>,
     solution: pipe(
       reduce(
-        ([max, sum], calorie) => [calorie ? max : (max.push(sum), max), sum + (calorie || -sum)] as [number[], number],
+        ([max, sum], calorie) =>
+          [calorie ? max : (max.push(sum), max), sum + (calorie || -sum)] as [number[], number],
         [[], 0] as [number[], number]
       ),
       first,

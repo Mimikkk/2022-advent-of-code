@@ -2,7 +2,8 @@ import { filter, identity, map, pipe, sum } from "lodash/fp";
 import { day, Preprocess } from "../../utils";
 
 const isDraw = (a: number, b: number) => a === b;
-const isWin = (a: number, b: number) => (b === 1 && a === 3) || (b === 2 && a === 1) || (b === 3 && a === 2);
+const isWin = (a: number, b: number) =>
+  (b === 1 && a === 3) || (b === 2 && a === 1) || (b === 3 && a === 2);
 
 const Shape: Record<string, number> = {
   X: 1,

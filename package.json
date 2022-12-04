@@ -18,7 +18,7 @@
     "test": "vitest"
   },
   "prettier": {
-    "printWidth": 120,
+    "printWidth": 100,
     "semi": true,
     "endOfLine": "crlf",
     "tabWidth": 2
