@@ -3,9 +3,10 @@ import { describe, it } from "vitest";
 import { readlines, TestType } from "./file";
 
 export type Fn<Input, Result> = (input: Input) => Result | Promise<Result>;
+export type Preprocess<Result> = Fn<string[], Result>;
 
 export interface Part<Input, Result> {
-  preprocess?: Fn<string[], Input>;
+  preprocess?: Preprocess<Input>;
   solution: Fn<Input, Result>;
   expected: Result;
 }
