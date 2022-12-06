@@ -1,4 +1,4 @@
-import {
+import _, {
   filter,
   isEmpty,
   split,
@@ -28,7 +28,7 @@ const parseCommands = pipe(
   map(([x, y, z]) => [x, y - 1, z - 1])
 ) as Preprocess<Command[]>;
 
-const parseCrates = (boxes: string[]) =>
+const parseCrates = ((boxes) =>
   map(
     (i) =>
       pipe(
@@ -37,42 +37,38 @@ const parseCrates = (boxes: string[]) =>
         reverse
       )(boxes),
     range(0, +/\d+ *$/.exec(boxes.pop()!)?.[0]!)
-  );
+  )) as Preprocess<string[][]>;
 
 const createCratesAndCommands = ((lines) => [
   parseCrates(lines.splice(0, lines.findIndex(isEmpty))),
   parseCommands(lines),
 ]) as Preprocess<[string[][], Command[]]>;
 
+const solution = (type: "reversed" | "identity") =>
+  pipe(
+    tap(([crates, commands]) =>
+      each(([count, from, to]) => {
+        crates[to] = concat(
+          crates[to],
+          pipe(takeLast(count), type === "reversed" ? reverse : identity)(crates[from])
+        );
+        crates[from] = dropLast(count, crates[from]);
+      }, commands)
+    ),
+    first,
+    map(last),
+    join("")
+  );
+
 export default day({
   first: {
     preprocess: createCratesAndCommands,
-    solution: pipe(
-      tap(([crates, commands]) =>
-        each(([count, from, to]) => {
-          crates[to] = concat(crates[to], reverse(takeLast(count, crates[from])));
-          crates[from] = dropLast(count, crates[from]);
-        }, commands)
-      ),
-      first,
-      map(last),
-      join("")
-    ),
+    solution: solution("reversed"),
     expected: "CMZ",
   },
   second: {
     preprocess: createCratesAndCommands,
-    solution: pipe(
-      tap(([crates, commands]) =>
-        each(([count, from, to]) => {
-          crates[to] = concat(crates[to], takeLast(count, crates[from]));
-          crates[from] = dropLast(count, crates[from]);
-        }, commands)
-      ),
-      first,
-      map(last),
-      join("")
-    ),
+    solution: solution("identity"),
     expected: "MCD",
   },
 });
