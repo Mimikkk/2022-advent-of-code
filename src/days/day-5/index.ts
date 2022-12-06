@@ -1,5 +1,4 @@
-import { List } from "lodash";
-import _, {
+import {
   filter,
   isEmpty,
   split,
@@ -8,18 +7,15 @@ import _, {
   pipe,
   negate,
   toNumber,
-  size,
   last,
   range,
   isEqual,
-  trim,
   reverse,
   join,
   concat,
   takeLast,
   dropLast,
   tap,
-  takeWhile,
   each,
   first,
 } from "lodash/fp";
