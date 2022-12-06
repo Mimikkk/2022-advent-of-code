@@ -1,4 +1,4 @@
-import _, {
+import {
   filter,
   isEmpty,
   split,
@@ -26,7 +26,7 @@ const parseCommands = pipe(
   filter(identity),
   map(pipe(split(" "), map(toNumber), filter(negate(isNaN)))),
   map(([x, y, z]) => [x, y - 1, z - 1])
-) as Preprocess<Command[]>;
+) satisfies Preprocess<Command[]>;
 
 const parseCrates = ((boxes) =>
   map(
@@ -37,12 +37,12 @@ const parseCrates = ((boxes) =>
         reverse
       )(boxes),
     range(0, +/\d+ *$/.exec(boxes.pop()!)?.[0]!)
-  )) as Preprocess<string[][]>;
+  )) satisfies Preprocess<string[][]>;
 
 const createCratesAndCommands = ((lines) => [
   parseCrates(lines.splice(0, lines.findIndex(isEmpty))),
   parseCommands(lines),
-]) as Preprocess<[string[][], Command[]]>;
+]) satisfies Preprocess<[string[][], Command[]]>;
 
 const solution = (type: "reversed" | "identity") =>
   pipe(
