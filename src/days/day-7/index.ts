@@ -1,40 +1,18 @@
 import {
   split,
   pipe,
-  join,
   findIndex,
-  uniq,
-  add,
   filter,
   identity,
-  each,
-  dropLast,
-  trim,
   map,
-  dropWhile,
-  drop,
-  first,
-  isEqual,
-  negate,
   fromPairs,
-  reverse,
   slice,
   startsWith,
-  merge,
-  assign,
-  curry,
-  __,
-  getOr,
-  entries,
-  keys,
-  values,
-  tap,
   reduce,
-  flatMap,
   sum,
 } from "lodash/fp";
 import { day, Preprocess } from "../../utils";
-import { assignIn, extend, isNumber, isObject, partial } from "lodash";
+import { assignIn, partial } from "lodash";
 interface Dir extends Record<string, Dir | number> {
   size: number;
 }
@@ -95,6 +73,7 @@ const extractSizes = ({ size, ...dirs }: Dir): number[] => [
   //@ts-expect-error
   ...Object.values(dirs).flatMap(extractSizes),
 ];
+
 export default day({
   first: {
     preprocess,
