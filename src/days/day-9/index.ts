@@ -1,38 +1,12 @@
-import { filter, identity, map, pipe, split, times } from "lodash/fp";
-import { day, Preprocess } from "../../utils";
+import { filter, identity, map, pipe, range, slice, split, times } from "lodash/fp";
+import { day, Preprocess, windows } from "../../utils";
 
 type Coord = [number, number];
 namespace Coord {
   type Self = Coord;
 
-  export function add(self: Self, other: number): Self;
-  export function add(self: Self, other: Self): Self;
-  export function add([x, y]: Self, other: Self | number): Self {
-    if (typeof other === "number") return [x + other, y + other];
-
-    const [ox, oy] = other;
-    return [x + ox, y + oy];
-  }
-  export function sub(self: Self, other: number): Self;
-  export function sub(self: Self, other: Self): Self;
-  export function sub([x, y]: Self, other: Self | number): Self {
-    if (typeof other === "number") return [x - other, y - other];
-
-    const [ox, oy] = other;
-    return [x - ox, y - oy];
-  }
-
-  export function times(self: Self, other: number): Self;
-  export function times(self: Self, other: Self): Self;
-  export function times([x, y]: Self, other: Self | number): Self {
-    if (typeof other === "number") return [x * other, y * other];
-
-    const [ox, oy] = other;
-    return [x * ox, y * oy];
-  }
-
-  export const distance = ([ax, ay]: Self, [bx, by]: Self) =>
-    Math.max(Math.abs(ax - bx), Math.abs(ay - by));
+  export const add = ([x, y]: Self, [ox, oy]: Self): Self => [x + ox, y + oy];
+  export const sub = ([x, y]: Self, [ox, oy]: Self): Self => [x - ox, y - oy];
 
   export const createSet = (): Set<Coord> =>
     new (class extends Set {
@@ -69,28 +43,27 @@ const solution = (n: number) => (commands: [Coord, number][]) => {
   const visited = Coord.createSet();
   const S = times((): Coord => [0, 0], n);
 
-  commands.forEach(([D, count]) => {
-    for (let step = 0; step < count; ++step) {
+  commands.forEach(([D, count]) =>
+    range(0, count).forEach(() => {
       S[0] = Coord.add(S[0], D);
 
-      for (let i = 1; i < S.length; ++i) {
-        const [dx, dy] = Coord.sub(S[i - 1], S[i]);
+      windows(2)(S).forEach(([prev, C]) => {
+        const [dx, dy] = Coord.sub(prev, C);
 
-        console.log(Math.max(Math.abs(dx), Math.abs(dy)), dx, dy);
         if (Math.abs(dx) >= 2) {
-          S[i][0] += Math.sign(dx);
+          C[0] += Math.sign(dx);
 
-          if (Math.abs(dy) != 0) S[i][1] += Math.sign(dy);
+          if (Math.abs(dy)) C[1] += Math.sign(dy);
         } else if (Math.abs(dy) >= 2) {
-          S[i][1] += Math.sign(dy);
+          C[1] += Math.sign(dy);
 
-          if (Math.abs(dx) != 0) S[i][0] += Math.sign(dx);
+          if (Math.abs(dx)) C[0] += Math.sign(dx);
         }
-      }
+      });
 
       visited.add(S.at(-1)!);
-    }
-  });
+    })
+  );
 
   return visited.size;
 };
@@ -100,12 +73,10 @@ export default day({
     preprocess,
     solution: solution(2),
     expected: 13,
-    skipreal: true,
   },
-  // second: {
-  //   preprocess,
-  //   solution: solution(10),
-  //   expected: 1,
-  //   skipreal: true,
-  // },
+  second: {
+    preprocess,
+    solution: solution(10),
+    expected: 1,
+  },
 });

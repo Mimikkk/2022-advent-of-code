@@ -1,14 +1,5 @@
 import { split, pipe, join, findIndex, uniq, add } from "lodash/fp";
-import { day, Preprocess } from "../../utils";
-
-const windowGenerator = function* <T>(items: T[], size: number) {
-  for (let i = 0; i + size <= items.length; ++i) yield items.slice(i, i + size);
-};
-
-const windows =
-  (size: number) =>
-  <T>(items: T[]) =>
-    Array.from(windowGenerator(items, size));
+import { day, Preprocess, windows } from "../../utils";
 
 const findIndexOfFirstNUniqueCharacters = (n: number) =>
   pipe(
