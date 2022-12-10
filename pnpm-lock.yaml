@@ -8,6 +8,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.39.0
   eslint: 8.25.0
   eslint-plugin-unused-imports: ^2.0.0
+  immutable: ^4.1.0
   lodash: ^4.17.21
   prettier: ^2.7.1
   rollup: ^3.5.1
@@ -17,6 +18,7 @@ specifiers:
   vitest: ^0.24.0
 
 dependencies:
+  immutable: 4.1.0
   lodash: 4.17.21
 
 devDependencies:
@@ -932,6 +934,10 @@ packages:
     resolution: {integrity: sha512-d2qQLzTJ9WxQftPAuEQpSPmKqzxePjzVbpAVv62AQ64NTL+wR4JkrVqR/LqFsFEUsHDAiId52mJteHDFuDkElA==}
     engines: {node: '>= 4'}
     dev: true
+
+  /immutable/4.1.0:
+    resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
+    dev: false
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
