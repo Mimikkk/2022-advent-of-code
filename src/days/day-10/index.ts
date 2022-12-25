@@ -10,6 +10,9 @@ import {
   sum,
   add,
   find,
+  times,
+  join,
+  chunk,
 } from "lodash/fp";
 import { day, Preprocess } from "../../utils";
 import { cond } from "lodash";
@@ -51,5 +54,35 @@ export default day({
       return sum(signals);
     },
     expected: 13140,
+  },
+  second: {
+    preprocess,
+    solution: (commands) => {
+      const crt: string[] = [];
+
+      let [X, C] = [1, 0];
+      commands.forEach(([command, iters]) => {
+        for (let i = 0; i < iters; ++i) {
+          crt.push([X - 1, X, X + 1].includes(C % 40) ? "#" : ".");
+
+          C += 1;
+          if (i === 1 && isAddx(command)) X += command[1];
+        }
+      });
+
+      return pipe(chunk(40), map(join("")), join("\n"))(crt);
+    },
+    expected: pipe(
+      split(/[ \n\r]+/g),
+      filter(identity),
+      join("\n")
+    )(`
+      ##..##..##..##..##..##..##..##..##..##..
+      ###...###...###...###...###...###...###.
+      ####....####....####....####....####....
+      #####.....#####.....#####.....#####.....
+      ######......######......######......####
+      #######.......#######.......#######.....
+    `),
   },
 });

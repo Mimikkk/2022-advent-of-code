@@ -31,7 +31,7 @@ export const day =
             it(`Should return ${expected} for test input`, async () => {
               const lines = await read("test");
 
-              expect(await solution(lines)).toBe(expected);
+              expect(await solution(lines)).toStrictEqual(expected);
             });
 
             if (skipreal) return;
